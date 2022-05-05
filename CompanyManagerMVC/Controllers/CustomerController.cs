@@ -1,4 +1,6 @@
-﻿using CompanyManagerMVC.DatabaseModels;
+﻿using System.Security.Claims;
+using CompanyManagerMVC.DatabaseModels;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,5 +25,10 @@ public class CustomerController : Controller
             .Include(user => user.Department)
             .Include(user => user.Role)
             .FirstOrDefaultAsync());
+    }
+
+    public ActionResult Login()
+    {
+        return View();
     }
 }
