@@ -1,5 +1,6 @@
 ﻿using CompanyManagerMVC.DatabaseModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompanyManagerMVC.Controllers;
 
@@ -16,6 +17,8 @@ public class DepartmentController : Controller
 
     public IActionResult Index()
     {
-        return View(_database.Departments.ToList());
+        return View(_database.Departments
+            .Include(department => department.Users)
+            .ToList());
     }
 }

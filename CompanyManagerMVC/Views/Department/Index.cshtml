@@ -4,6 +4,23 @@
     ViewData["Title"] = "Departments";
 }
 <h1>Departments</h1>
-<ol>
-    
+<ol class="list-group">
+    @{
+        foreach (var department in Model!)
+        {
+            <li class="list-group-item">
+                <div class="dropdown-header">
+                    @department.Name
+                    @{
+                        foreach (var user in department.Users)
+                        {
+                            <div class="dropdown-item">
+                                @user.Email
+                            </div>
+                        }
+                    }
+                </div>
+            </li>
+        }
+    }
 </ol>

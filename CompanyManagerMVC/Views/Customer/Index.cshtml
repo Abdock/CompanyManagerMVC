@@ -1,0 +1,18 @@
+﻿@model CompanyManagerMVC.DatabaseModels.User
+
+@{
+    ViewData["Title"] = "Account";
+}
+
+<h1>@Model!.FirstName @Model.LastName</h1>
+<div class="flex-column">
+    <h2 class="h2">Tasks</h2>
+    <ol>
+        @{
+            foreach (var task in Model.TaskCreators)
+            {
+                <li>@task.Name</li>
+            }
+        }
+    </ol>
+</div>
