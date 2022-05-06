@@ -1,0 +1,74 @@
+﻿@using CompanyManagerMVC.Entities
+@model CompanyManagerMVC.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Registration";
+}
+
+<h2>Registration</h2>
+<a asp-action="Registration" asp-controller="Customer">Registration</a>
+
+<form asp-action="Registration" asp-controller="Customer" asp-antiforgery="true">
+    <div class="has-validation" asp-validation-summary="ModelOnly"></div>
+    <div>
+        <div>
+            <label asp-for="Name">Enter name</label>
+            <input type="text" asp-for="Name"/>
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div>
+            <label asp-for="Surname">Enter surname</label>
+            <input type="text" asp-for="Surname"/>
+            <span asp-validation-for="Surname"></span>
+        </div>
+        <div>
+            <label asp-for="Phone">Enter phone</label>
+            <input type="text" asp-for="Phone"/>
+            <span asp-validation-for="Phone"></span>
+        </div>
+        <div>
+            <label asp-for="Email">Enter email</label>
+            <input type="text" asp-for="Email"/>
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div>
+            <label asp-for="Password">Enter password</label>
+            <input type="password" asp-for="Password"/>
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div>
+            <label asp-for="ConfirmPassword">Confirm password</label>
+            <input type="password" asp-for="ConfirmPassword"/>
+            <span asp-validation-for="ConfirmPassword"></span>
+        </div>
+        <div>
+            <label asp-for="Department">Select department</label>
+            <select asp-for="Department" class="form-select">
+                @{
+                    var departments = ViewBag.Departments as List<Department>;
+                    foreach (var department in departments!)
+                    {
+                        <option value="@department">@department.Name</option>
+                    }
+                }
+            </select>
+            <span asp-validation-for="Department"></span>
+        </div>
+        <div>
+            <label asp-for="Role">Select role</label>
+            <select asp-for="Role" class="form-select">
+                @{
+                    var roles = ViewBag.Roles as List<UserRole>;
+                    foreach (var role in roles!)
+                    {
+                        <option value="@role">@role.Name</option>
+                    }
+                }
+            </select>
+            <span asp-validation-for="Role"></span>
+        </div>
+        <div>
+            <input type="submit" value="Registration" class="btn btn-outline-dark"/>
+        </div>
+    </div>
+</form>

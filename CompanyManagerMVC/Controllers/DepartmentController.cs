@@ -15,6 +15,7 @@ public class DepartmentController : Controller
         _database = database;
     }
 
+    [HttpGet]
     public IActionResult Index()
     {
         return View(_database.Departments

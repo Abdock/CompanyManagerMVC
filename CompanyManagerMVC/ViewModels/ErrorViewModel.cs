@@ -1,4 +1,4 @@
-namespace CompanyManagerMVC.Models;
+namespace CompanyManagerMVC.ViewModels;
 
 public class ErrorViewModel
 {

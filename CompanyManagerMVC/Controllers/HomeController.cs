@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
+using CompanyManagerMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using CompanyManagerMVC.Models;
 
 namespace CompanyManagerMVC.Controllers;
 
@@ -13,16 +13,19 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    [HttpGet]
     public IActionResult Index()
     {
         return View();
     }
 
+    [HttpGet]
     public IActionResult Privacy()
     {
         return View();
     }
 
+    [HttpGet]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
