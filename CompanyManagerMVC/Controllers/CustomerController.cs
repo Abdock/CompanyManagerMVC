@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-using CompanyManagerMVC.DatabaseModels;
-using Microsoft.AspNetCore.Authentication;
+﻿using CompanyManagerMVC.Context;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +7,9 @@ namespace CompanyManagerMVC.Controllers;
 
 public class CustomerController : Controller
 {
-    private readonly CompanyContext _database;
+    private readonly MyDbContext _database;
 
-    public CustomerController(CompanyContext database)
+    public CustomerController(MyDbContext database)
     {
         _database = database;
     }

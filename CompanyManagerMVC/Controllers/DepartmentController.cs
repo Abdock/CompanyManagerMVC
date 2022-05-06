@@ -1,4 +1,4 @@
-﻿using CompanyManagerMVC.DatabaseModels;
+﻿using CompanyManagerMVC.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,9 +7,9 @@ namespace CompanyManagerMVC.Controllers;
 public class DepartmentController : Controller
 {
     private readonly ILogger<DepartmentController> _logger;
-    private readonly CompanyContext _database;
+    private readonly MyDbContext _database;
 
-    public DepartmentController(ILogger<DepartmentController> logger, CompanyContext database)
+    public DepartmentController(ILogger<DepartmentController> logger, MyDbContext database)
     {
         _logger = logger;
         _database = database;
