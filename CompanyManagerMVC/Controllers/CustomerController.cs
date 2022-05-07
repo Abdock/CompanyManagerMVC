@@ -25,7 +25,7 @@ public class CustomerController : Controller
 
     [HttpGet]
     [Authorize]
-    public async Task<ActionResult> Index()
+    public async Task<ActionResult> Tasks()
     {
         return View(await _database.Users
             .Where(u => u.Email == User.Identity!.Name)
@@ -48,7 +48,8 @@ public class CustomerController : Controller
             new Claim(ClaimTypes.Name, user.Email),
             new Claim(ClaimTypes.Role, user.Role.Name)
         };
-        var id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+        var id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
+            ClaimsIdentity.DefaultRoleClaimType);
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
     }
 
@@ -66,8 +67,9 @@ public class CustomerController : Controller
             {
                 await Authenticate(user);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Tasks");
             }
+
             ModelState.AddModelError("", "Email or password incorrect");
         }
 
@@ -75,6 +77,7 @@ public class CustomerController : Controller
     }
 
     [HttpGet]
+    [Authorize(Roles = "admin, moderator")]
     public async Task<ActionResult> Registration()
     {
         ViewBag.Departments = await _database.Departments.ToListAsync();
@@ -83,6 +86,7 @@ public class CustomerController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = "admin, moderator")]
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Registration(RegisterViewModel model)
     {
@@ -97,9 +101,9 @@ public class CustomerController : Controller
                 await _database.SaveChangesAsync();
                 await Authenticate(user);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Tasks");
             }
-            
+
             ModelState.AddModelError("", "Something is wrong");
         }
 
