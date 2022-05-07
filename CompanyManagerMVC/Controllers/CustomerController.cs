@@ -25,6 +25,19 @@ public class CustomerController : Controller
 
     [HttpGet]
     [Authorize]
+    public async Task<ActionResult> Index()
+    {
+        return View(await _database.Users
+            .Where(user => user.Email == User.Identity!.Name)
+            .Include(user => user.Department)
+            .Include(user => user.Role)
+            .Include(user => user.TaskExecutors)
+            .Include(user => user.TaskCreators)
+            .FirstOrDefaultAsync());
+    }
+
+    [HttpGet]
+    [Authorize]
     public async Task<ActionResult> Tasks()
     {
         return View(await _database.Users
@@ -45,8 +58,8 @@ public class CustomerController : Controller
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, user.Email),
-            new Claim(ClaimTypes.Role, user.Role.Name)
+            new(ClaimTypes.Name, user.Email),
+            new(ClaimTypes.Role, user.Role.Name)
         };
         var id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
             ClaimsIdentity.DefaultRoleClaimType);
@@ -67,7 +80,7 @@ public class CustomerController : Controller
             {
                 await Authenticate(user);
 
-                return RedirectToAction("Tasks");
+                return RedirectToAction("Index");
             }
 
             ModelState.AddModelError("", "Email or password incorrect");
@@ -101,7 +114,7 @@ public class CustomerController : Controller
                 await _database.SaveChangesAsync();
                 await Authenticate(user);
 
-                return RedirectToAction("Tasks");
+                return RedirectToAction("Index");
             }
 
             ModelState.AddModelError("", "Something is wrong");
